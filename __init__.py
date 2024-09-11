@@ -19,9 +19,9 @@ def hello_world():
 def MaPremiereAPI():
     return render_template('formulaire.html')
 
-@app.route("/histogramme/")
+@app.route("/rapport/")
 def histogramme():
-    return render_template('histogramme.html')
+    return render_template('graphique.html')
 
 @app.route('/tawarano/')
 def meteo():

@@ -5,13 +5,39 @@ from datetime import datetime
 from urllib.request import urlopen
 import sqlite3
                                                                                                                                        
-app = Flask(__name__)                                                                                                                  
+app = Flask(__name__)
 
-def MaPremiereAPI():
-    return "<h2>Ma page de contact</h2>"                                                                                                                                      
+@app.route("/commits/")
+def MonPremierCommit():
+    return render_template('commits.html')
+                                                                                                                                       
 @app.route('/')
 def hello_world():
-    return render_template('HELLO.html') #(comm2
+    return render_template('hello.html') #Comm5
+  
+@app.route("/contact/")
+def MaPremiereAPI():
+    return render_template('formulaire.html')
+
+@app.route("/histogramme/")
+def histogramme():
+    return render_template('histogramme.html')
+
+@app.route('/tawarano/')
+def meteo():
+    response = urlopen('https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx')
+    raw_content = response.read()
+    json_content = json.loads(raw_content.decode('utf-8'))
+    results = []
+    for list_element in json_content.get('list', []):
+        dt_value = list_element.get('dt')
+        temp_day_value = list_element.get('main', {}).get('temp') - 273.15 # Conversion de Kelvin en Â°c 
+        results.append({'Jour': dt_value, 'temp': temp_day_value})
+    return jsonify(results=results)
+
+@app.route("/rapport/")
+def mongraphique():
+    return render_template("graphique.html")
   
 if __name__ == "__main__":
   app.run(debug=True)

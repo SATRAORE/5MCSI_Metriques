@@ -41,6 +41,4 @@ def mongraphique():
   
 if __name__ == "__main__":
   app.run(debug=True)
-  @app.route("/commits/")
-def MonPremierCommit():
-    return render_template('commits.html')
+
